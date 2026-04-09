@@ -40,7 +40,12 @@
   console.keyMap = "us";
   environment = {
     binsh = "${pkgs.dash}/bin/dash";
-    systemPackages = [ pkgs.sbctl ];
+    systemPackages = with pkgs; [
+      sbctl
+      sops
+      age
+      ssh-to-age
+    ];
   };
   networking = {
     hostName = "matrix-backend";
