@@ -1,15 +1,28 @@
 # matrix backend server configuration
 
-### rebuild command:
-From a host with nix sandbox:
+## initial installation commands:
+
+These instructions have `192.168.122.xyz` as a placeholder IP address. Replace all instances of this when running the commands.
+
+These instructions also have `/dev/vda` as the drive to partition and format. Make sure you know what drive you actually want to use and adjust the `sfdisk`, `mount`, and `mkfs` commands accordingly.
+
+In the bootable installer:
+
 ```
-nixos-rebuild switch --flake .#matrix-backend --target-host root@matrix-backend --build-host localhost
+sudo passwd root  # use a 7+ word passphrase
 ```
 
-### initial installation commands:
+From a dev machine:
 
 ```
-sudo -i
+# replace the IP:
+
+ssh root@192.168.122.xyz
+```
+
+While ssh'ed into the installer:
+
+```
 git clone https://github.com/jx-wi/matrix-backend.git
 sfdisk /dev/vda << 'EOF'
 label: gpt
@@ -21,16 +34,26 @@ mkfs.vfat /dev/vda1
 mount /dev/vda2 /mnt
 mount /dev/vda1 -m /mnt/boot
 nixos-generate-config --root /mnt --dir matrix-backend
-```
-
-```
 nixos-install --flake path:matrix-backend#matrix-backend
-```
-NOTE: `nixos-install` WILL FAIL TO INSTALL THE BOOTLOADER THE FIRST TIME - THIS IS INTENDED
-
-```
 nixos-enter --command "sbctl create-keys"
 nixos-install --flake path:matrix-backend#matrix-backend
+exit
 ```
-NOTE: `nixos-install` SHOULD WORK THIS TIME SINCE SECURE BOOT KEYS WERE CREATED
+
+After `exit`, run this from a dev machine with the age admin key:
+
+```
+sops --extract '["ssh_host_ed25519_key"]' -d Projects/matrix-backend/secrets/secrets.yaml \
+  | ssh root@192.168.122.xyz "cat > /mnt/etc/ssh/ssh_host_ed25519_key && chmod 600 /mnt/etc/ssh/ssh_host_ed25519_key"
+```
+
+If all seems well, reboot the matrix machine.
+
+## rebuild command:
+
+From a host with nix sandbox:
+
+```
+nixos-rebuild switch --flake .#matrix-backend --target-host root@matrix-backend --build-host localhost
+```
 

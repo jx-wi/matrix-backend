@@ -33,6 +33,7 @@
         owner = "root";
         mode = "0600";
       };
+      tailscale_auth_key = {};
       jaxxen_hashed_password.neededForUsers = true;
       garth_hashed_password.neededForUsers = true;
     };
@@ -121,7 +122,11 @@
     tailscale = {
       enable = true;
       useRoutingFeatures = "server";
-      extraUpFlags = [ "--ssh" ];
+      authKeyFile = config.sops.secrets.tailscale_auth_key.path;
+      extraUpFlags = [
+        "--ssh"
+        "--advertise-tags=tag:matrix-backend"
+      ];
     };
   };
   system.stateVersion = "25.11";
