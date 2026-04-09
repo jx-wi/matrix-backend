@@ -1,5 +1,5 @@
 {
-  description = "matrix backend";
+  description = "backend of our matrix server";
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.11";
     lanzaboote = {
@@ -7,7 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
-      url = "github:Mic92/sops-nix";
+      url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -21,10 +21,10 @@
     nixosConfigurations.matrix-backend = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./hardware-configuration.nix
-        ./configuration.nix
         lanzaboote.nixosModules.lanzaboote
         sops-nix.nixosModules.sops
+        ./hardware-configuration.nix
+        ./configuration.nix
       ];
     };
   };

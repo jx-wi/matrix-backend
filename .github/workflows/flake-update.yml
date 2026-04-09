@@ -1,0 +1,28 @@
+name: flake update
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v13
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - name: nix flake update
+        run: nix flake update
+      - name: create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "flake: update inputs"
+          title: "flake: update inputs"
+          branch: flake-update/auto
+          delete-branch: true
+          body: |
+            Automated `nix flake update` via CI.
+            Review input bumps before merging.

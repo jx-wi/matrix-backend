@@ -1,0 +1,19 @@
+name: flake check
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v13
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - name: nix flake check
+        run: nix flake check --show-trace --keep-going
+      - name: build matrix-backend toplevel
+        run: |
+          nix build .#nixosConfigurations.matrix-backend.config.system.build.toplevel \
+            --dry-run \
+            --show-trace

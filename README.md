@@ -26,11 +26,11 @@ nixos-generate-config --root /mnt --dir matrix-backend
 ```
 nixos-install --flake path:matrix-backend#matrix-backend
 ```
-NOTE: nixos-install WILL FAIL TO INSTALL THE BOOTLOADER THE FIRST TIME - THIS IS INTENDED
+NOTE: `nixos-install` WILL FAIL TO INSTALL THE BOOTLOADER THE FIRST TIME - THIS IS INTENDED
 
 ```
 nixos-enter --command "sbctl create-keys"
 nixos-install --flake path:matrix-backend#matrix-backend
-# NOTE: nixos-install SHOULD WORK THIS TIME SINCE SECURE BOOT KEYS WERE CREATED
 ```
+NOTE: `nixos-install` SHOULD WORK THIS TIME SINCE SECURE BOOT KEYS WERE CREATED
 

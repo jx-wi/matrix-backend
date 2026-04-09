@@ -136,7 +136,7 @@
         isNormalUser = true;
         shell = pkgs.zsh;
         extraGroups = [ "wheel" ];
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAiTFFo3ElmEaZBeqmWf49E59I129tJ7pIIhgCvJ5BZa garth@fleet" ];
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyAiR+HClBoACzaQu4zpdS5bgosI2RGLctxuIh8HK/G garth@fleet" ];
         hashedPasswordFile = config.sops.secrets.garth_hashed_password.path;
       };
       root.hashedPassword = "!";
