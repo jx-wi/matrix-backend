@@ -43,12 +43,12 @@ exit
 After `exit`, run this from a dev machine with the age admin key:
 
 ```
-# replace REPO_DIR
+# replace REPO_DIR and TARGET_HOST_IP
 
 cd REPO_DIR
 
 sops --extract '["ssh_host_ed25519_key"]' -d secrets/matrix-backend/ssh.yaml \
-  | ssh root@192.168.122.xyz "cat > /mnt/etc/ssh/ssh_host_ed25519_key && chmod 600 /mnt/etc/ssh/ssh_host_ed25519_key"
+  | ssh root@TARGET_HOST_IP "cat > /mnt/etc/ssh/ssh_host_ed25519_key && chmod 600 /mnt/etc/ssh/ssh_host_ed25519_key"
 ```
 
 If all seems well, reboot the matrix machine.
