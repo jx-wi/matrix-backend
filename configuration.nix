@@ -25,17 +25,28 @@
     priority = 100;
   };
   sops = {
-    defaultSopsFile = ./secrets/secrets.yaml;
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
       ssh_host_ed25519_key = {
+        sopsFile = ./secrets/matrix-backend/ssh.yaml;
         path = "/etc/ssh/ssh_host_ed25519_key";
         owner = "root";
         mode = "0600";
       };
-      tailscale_auth_key = {};
-      jaxxen_hashed_password.neededForUsers = true;
-      garth_hashed_password.neededForUsers = true;
+      tailscale_auth_key = {
+        sopsFile = ./secrets/matrix-backend/tailscale.yaml;
+        key = "auth_key";
+      };
+      jaxxen_hashed_password = {
+        sopsFile = ./secrets/matrix-backend/jaxxen/password.yaml;
+        key = "hashed_password";
+        neededForUsers = true;
+      };
+      garth_hashed_password = {
+        sopsFile = ./secrets/matrix-backend/garth/password.yaml;
+        key = "hashed_password";
+        neededForUsers = true;
+      };
     };
   };
   console.keyMap = "us";
