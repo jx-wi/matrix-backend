@@ -2,9 +2,7 @@
 
 ## initial installation commands:
 
-These instructions have `192.168.122.xyz` as a placeholder IP address. Replace all instances of this when running the commands.
-
-These instructions also have `/dev/vda` as the drive to partition and format. Make sure you know what drive you actually want to use and adjust the `sfdisk`, `mount`, and `mkfs` commands accordingly.
+These instructions have `/dev/vda` as the drive to partition and format. Make sure you know what drive you actually want to use and adjust the `sfdisk`, `mount`, and `mkfs` commands accordingly.
 
 In the bootable installer:
 
@@ -15,9 +13,9 @@ sudo passwd root  # use a 7+ word passphrase
 From a dev machine:
 
 ```
-# replace the IP:
+# replace TARGET_HOST_IP:
 
-ssh root@192.168.122.xyz
+ssh root@TARGET_HOST_IP
 ```
 
 While ssh'ed into the installer:
