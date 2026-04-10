@@ -27,12 +27,6 @@
   sops = {
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
-      ssh_host_ed25519_key = {
-        sopsFile = ./secrets/matrix-backend/ssh.yaml;
-        path = "/etc/ssh/ssh_host_ed25519_key";
-        owner = "root";
-        mode = "0600";
-      };
       tailscale_auth_key = {
         sopsFile = ./secrets/matrix-backend/tailscale.yaml;
         key = "auth_key";
