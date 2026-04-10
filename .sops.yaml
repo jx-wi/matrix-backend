@@ -1,11 +1,13 @@
 keys:
   - &admin age12h7uw2sh7z37420tyxy0dlhssug9er7sedn556wg87t4n9tp35jsfz8kmy
+  - &admin2 age1qqxj63msqtagh29km6t6cm0le5d4eqdps372w0rvsz6ft5633yvqc7whnx
   - &matrix-backend age1qe93cz32rplg562cu33ajftnc05mh9fmeduz9qcvsu2jy3denuqqhmt39p
 creation_rules:
   - path_regex: secrets/matrix-backend/ssh\.yaml$
     key_groups:
       - age:
         - *admin
+        - *admin2
         - *matrix-backend
   - path_regex: secrets/matrix-backend/tailscale\.yaml$
     key_groups:
