@@ -43,7 +43,11 @@ exit
 After `exit`, run this from a dev machine with the age admin key:
 
 ```
-sops --extract '["ssh_host_ed25519_key"]' -d Projects/matrix-backend/secrets/secrets.yaml \
+# replace REPO_DIR
+
+cd REPO_DIR
+
+sops --extract '["ssh_host_ed25519_key"]' -d secrets/matrix-backend/ssh.yaml \
   | ssh root@192.168.122.xyz "cat > /mnt/etc/ssh/ssh_host_ed25519_key && chmod 600 /mnt/etc/ssh/ssh_host_ed25519_key"
 ```
 
