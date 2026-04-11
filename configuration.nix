@@ -79,13 +79,10 @@
     };
   };
   */
-  nix.settings = {
-    sandbox = false;
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-  };
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   programs = {
     zsh.enable = true;
     nh = {
@@ -103,7 +100,6 @@
   }];
   security = {
     pam.services.su.rootOK = lib.mkForce false;
-    allowUserNamespaces = false;
     sudo-rs = {
       enable = true;
       execWheelOnly = true;
