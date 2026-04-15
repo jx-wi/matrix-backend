@@ -164,8 +164,8 @@
         "diskstats"
         "netdev"
         "filesystem"
-        "hwmon"
-        "thermal"
+        # "hwmon"
+        # "thermal"
       ];
     };
   };
