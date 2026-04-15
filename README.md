@@ -98,6 +98,7 @@ nh os switch github:jx-wi/matrix-backend
 
 ## Security
 
+- Kernel image protection and module locking (`protectKernelImage`, `lockKernelModules`)
 - Tailscale mesh VPN — admin/SSH access plane; Matrix federation traffic on 443
 - sops-nix/age encryption — secrets never stored in plaintext; multi-recipient (admin + host keys)
 - Lanzaboote — cryptographically verified boot chain (replaces standard systemd-boot)
