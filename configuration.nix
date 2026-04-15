@@ -64,17 +64,38 @@
     useDHCP = false;
     useNetworkd = true;
   };
-  systemd.network = {
-    enable = true;
-    networks."10-lan" = {
-      address = [ "192.168.1.101/24" ];
-      matchConfig.Name = "e*";
-      dns = [
-        "192.168.1.1"
-        "1.1.1.1"
-        "1.0.0.1"
-      ];
-      gateway = [ "192.168.1.1" ];
+  systemd = {
+    network = {
+      enable = true;
+      networks."10-lan" = {
+        address = [ "192.168.1.101/24" ];
+        matchConfig.Name = "e*";
+        dns = [
+          "192.168.1.1"
+          "1.1.1.1"
+          "1.0.0.1"
+        ];
+        gateway = [ "192.168.1.1" ];
+      };
+    };
+    services.nh-os-switch = {
+      description = "Run nh os switch github:jx-wi/matrix-backend";
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.nh}/bin/nh os switch github:jx-wi/matrix-backend";
+        StandardOutput = "journal";
+        StandardError = "journal";
+      };
+    };
+    timers.nh-os-switch = {
+      description = "Weekly nh os switch (Monday 9am)";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "Mon 09:00";
+        Persistent = true;
+      };
     };
   };
   nix.settings.experimental-features = [
