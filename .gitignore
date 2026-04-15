@@ -1,0 +1,5 @@
+secrets/**/*.age
+*.swp
+result
+.direnv
+**/.DS_Store
