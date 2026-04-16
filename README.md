@@ -107,6 +107,7 @@ nh os switch github:jx-wi/matrix-backend
 - Immutable declarative users (`mutableUsers = false`) — no out-of-band state
 - Encrypted swap with random key per boot
 - fail2ban brute-force protection
+- CI tool versions pinned by commit hashes 
 
 ## Roadmap
 
