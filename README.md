@@ -30,7 +30,7 @@
 > [!NOTE]
 > `disko.nix` is configured to format `/dev/sda`. Make sure you know what drive you actually want to use and adjust `disko.nix` accordingly.
 > 
-> `systemd.network` is configured to use `192.168.1.1` as the gateway and `192.168.1.101/24` as matrix-backend's IP address. Make sure you know what gateway and IP address you actually want to use and adjust `systemd.network` accordingly.
+> `systemd.network` is configured to use `192.168.0.1` as the gateway and `192.168.0.101/24` as matrix-backend's IP address. Make sure you know what gateway and IP address you actually want to use and adjust `systemd.network` accordingly.
 
 In the NixOS installer:
 
