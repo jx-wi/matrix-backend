@@ -68,14 +68,14 @@
     network = {
       enable = true;
       networks."10-lan" = {
-        address = [ "192.168.1.101/24" ];
+        address = [ "192.168.0.101/24" ];
         matchConfig.Name = "e*";
         dns = [
-          "192.168.1.1"
+          "192.168.0.1"
           "1.1.1.1"
           "1.0.0.1"
         ];
-        gateway = [ "192.168.1.1" ];
+        gateway = [ "192.168.0.1" ];
       };
     };
     services.nh-os-switch = {
