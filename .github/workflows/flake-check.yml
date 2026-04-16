@@ -6,13 +6,15 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read   # strictest possible
     steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v13
-      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+      - uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
       - name: nix flake check
         run: nix flake check --show-trace --keep-going
-      - name: build matrix-backend toplevel
+      - name: build matrix-backend toplevel (dry-run)
         run: |
           nix build .#nixosConfigurations.matrix-backend.config.system.build.toplevel \
             --dry-run \
