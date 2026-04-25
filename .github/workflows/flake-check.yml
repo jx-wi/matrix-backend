@@ -1,0 +1,23 @@
+name: flake check
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # strictest possible
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (Jan 2026)
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22 (Mar 2026)
+      - uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13 (Jul 2025)
+        continue-on-error: true
+      - name: nix flake check
+        run: nix flake check --show-trace --keep-going
+      - name: build matrix-backend toplevel (dry-run)
+        run: |
+          nix build .#nixosConfigurations.matrix-backend.config.system.build.toplevel \
+            --dry-run \
+            --show-trace
