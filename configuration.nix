@@ -337,7 +337,7 @@ in {
         group = "jaxxen";
         shell = pkgs.zsh;
         extraGroups = [ "wheel" ];
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsK6bi38PTgEgIEkbWDwnfbuxlnqThC8EG1YY2JODr6 jaxxen@fleet" ];
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFOxJtESbtCQLi+TtzAZC43F++ImDfAU9AZlOievcM6o jaxxen@substrate" ];
         hashedPasswordFile = config.sops.secrets.jaxxen_hashed_password.path;
       };
       garth = {
