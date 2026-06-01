@@ -74,12 +74,16 @@ in {
   console.keyMap = "us";
   environment = {
     binsh = "${pkgs.dash}/bin/dash";
-    enableAllTerminfo = true;
     systemPackages = with pkgs; [
       sbctl
       sops
       age
       ssh-to-age
+      alacritty.terminfo
+      foot.terminfo
+      ghostty.terminfo
+      kitty.terminfo
+      wezterm.terminfo
     ];
   };
   networking = {
