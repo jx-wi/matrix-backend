@@ -16,8 +16,17 @@ jobs:
         continue-on-error: true
       - name: nix flake update
         run: nix flake update
+      - name: check for changes
+        id: changed
+        run: |
+          if git diff --quiet flake.lock; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: create pull request
         id: cpr
+        if: steps.changed.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1 (Apr 2026)
         with:
           token: ${{ secrets.PAT }}
