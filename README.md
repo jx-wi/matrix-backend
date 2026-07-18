@@ -184,7 +184,7 @@ nh os switch github:jx-wi/matrix-backend
 > [!NOTE]
 > This also runs automatically. A systemd timer fires every Monday at 9am (server local time) and runs the same command against the live repo. To disable automatic updates, remove `systemd.timers.nh-os-switch` and `systemd.services.nh-os-switch` from `configuration.nix`.
 
-The source of truth is **this GitHub repo**, not the box. Make changes here, let CI validate them ([`flake check`](.github/workflows/flake-check.yml) evaluates the config and dry-run builds the system), then merge — the guest converges on the next rebuild.
+The source of truth is **this GitHub repo**, not the box. Make changes here, let CI validate them ([`flake check`](.github/workflows/flake-check.yml) evaluates the config and dry-run builds the system), then merge — the guest converges on the next rebuild. Run [`./ci.sh`](ci.sh) before pushing to execute those exact checks locally.
 
 ## Operations
 

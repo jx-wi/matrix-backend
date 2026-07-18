@@ -16,6 +16,8 @@ A single NixOS flake that fully defines one host, `matrix-backend`: a private Ma
 | `secrets/` | sops-encrypted YAML. Ciphertext is safe to commit; the repo is public. |
 | `ssh_host_ed25519_key.pub` | The guest's **public** host key. `ssh-to-age` of this == the `&matrix-backend` recipient. |
 | `.github/workflows/` | `flake-check` (PR gate) and `flake-update` (weekly auto-update + auto-merge). |
+| `.github/dependabot.yml` | Weekly github-actions bumps (7-day cooldown). Not Nix — `flake.lock` is `flake-update`'s. |
+| `ci.sh` | Run before every commit: executes the exact `flake-check.yml` steps locally (no drift). |
 
 ## Deployment environment (ground truth)
 
@@ -75,10 +77,13 @@ The maintainer has **limited access to the production network** (no-access route
 Local checks that work **without any production/router access**:
 
 ```
+./ci.sh                                             # runs EXACTLY what flake-check.yml runs (pre-commit)
 nix flake check --show-trace                       # evaluates the config (what CI runs)
 nix build .#nixosConfigurations.matrix-backend.config.system.build.toplevel --dry-run
 nixos-rebuild build-vm --flake .#matrix-backend     # boots a throwaway local QEMU VM
 ```
+
+`ci.sh` extracts each `run:` step from `.github/workflows/flake-check.yml` and executes it, so the local check and CI can never drift — the command list lives in the workflow only. Because those steps run as your user with no sandbox, `ci.sh` gates on a `git diff` against `origin/main`: if the workflow has been modified (unreviewed/unexpected), it prints the commands and requires confirmation before running — so a silent edit to `.github` can't execute behind your back. Run it before every push.
 
 `build-vm` is the closest thing to a test rig and needs no inbound networking — it runs entirely on the dev machine. Caveat: sops secrets won't decrypt inside it (no host age key), so secret-dependent services will fail to start there; it still validates evaluation, boot, the boot loader, and anything not gated on a secret. There is no NixOS VM integration test in `flake.nix` yet — adding one (`checks.<system>`) would be the highest-value testing improvement given the access constraints.
 
