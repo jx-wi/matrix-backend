@@ -1,0 +1,21 @@
+# Keep GitHub Actions current behind their SHA pins (security fixes land silently).
+# Only one ecosystem applies: github-actions (the SHA-pinned action versions in
+# .github/workflows/). Dependabot has no Nix flake ecosystem, so flake.lock stays
+# owned by the weekly flake-update.yml workflow.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # Supply-chain hardening: don't adopt a brand-new release the instant it lands.
+    # Security (GHSA) updates still open immediately.
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: ci
+    open-pull-requests-limit: 5
